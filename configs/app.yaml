@@ -1,0 +1,38 @@
+# ==============================================================================
+# Application Configuration Baseline
+# ==============================================================================
+app:
+  name: "network-operations-intelligence"
+  environment: "development"
+  version: "0.1.0"
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+
+correlation:
+  sliding_window_minutes: 60
+  orphan_diagnostic_timeout_minutes: 120
+
+rca:
+  confidence_threshold_min: 0.80
+  optical_rx_low_alarm_dbm: -14.0
+  crc_error_spike_threshold: 100
+  cpu_critical_pct: 90.0
+  memory_low_free_pct: 5.0
+
+prediction:
+  lookback_days: 30
+  forecast_horizon_days: 14
+  risk_weights:
+    ml_probability: 0.50
+    vulnerability_penalty: 0.25
+    telemetry_anomaly: 0.25
+  thresholds:
+    high: 70.0
+    critical: 85.0
+
+llm:
+  provider: "mock"
+  model_name: "gpt-4o-mini"
+  temperature: 0.0
+  timeout_seconds: 30
