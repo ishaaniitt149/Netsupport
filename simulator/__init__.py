@@ -6,10 +6,20 @@ from simulator.device_generator import (
     DeviceGeneratorConfig,
     ValidationReport,
 )
+from simulator.telemetry_generator import (
+    SCENARIO_DEVICE_MAP,
+    FailureScenarioType,
+    NetworkTelemetryGenerator,
+    TelemetryGeneratorConfig,
+)
 
 __all__ = [
     "SimulatorEnginePort",
     "CiscoDeviceGenerator",
     "DeviceGeneratorConfig",
     "ValidationReport",
+    "NetworkTelemetryGenerator",
+    "TelemetryGeneratorConfig",
+    "FailureScenarioType",
+    "SCENARIO_DEVICE_MAP",
 ]

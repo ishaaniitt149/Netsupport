@@ -71,46 +71,73 @@ The complete architectural blueprint is documented in `/docs`:
 
 ## Quickstart & Local Setup
 
-### 1. Prerequisites
-- **Python 3.11+** installed (check with `python3.11 --version`).
-- Virtual environment tool (`venv` or `conda`).
+Welcome! Follow this beginner-friendly guide to get the platform running locally. We use `make` commands to simplify the setup process. (If you are on Windows and don't have `make`, you can run the commands directly as listed inside the `Makefile`.)
 
-### 2. Environment Setup
+### 1. How to install Python
+Ensure you have **Python 3.11** or higher installed. 
+- **Mac/Linux**: We recommend using [Homebrew](https://brew.sh/): `brew install python@3.11`
+- **Windows**: Download the installer from the [official Python website](https://www.python.org/downloads/). Ensure you check "Add Python to PATH" during installation.
+You can verify your installation by running `python3 --version` in your terminal.
+
+### 2. How to create environment
+We use an isolated virtual environment to manage dependencies so they don't conflict with your system.
+Simply run:
 ```bash
-# 1. Create and activate virtual environment
-python3.11 -m venv .venv
-source .venv/bin/activate
+make setup
+```
+*(This command creates a `.venv` directory and installs all required packages from `requirements.txt`.)*
 
-# 2. Upgrade pip and install dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
+Activate the environment before proceeding:
+- **Mac/Linux**: `source .venv/bin/activate`
+- **Windows**: `.venv\Scripts\activate`
 
-# 3. Configure environment variables
-cp .env.example .env
+### 3. How to configure .env
+The `make setup` command automatically copies the `.env.example` file to `.env` for you. 
+Open the `.env` file in your editor and:
+1. Provide your `LLM_API_KEY` (if you intend to use OpenAI instead of the `mock` provider).
+2. Set `LLM_PROVIDER=openai` (default is `mock` for local testing without an API key).
+*Note: Never commit your `.env` file to version control.*
+
+### 4. How to generate data
+The system relies on synthetic device and telemetry data for simulations. Generate the baseline data by running:
+```bash
+make generate-data
 ```
 
-### 3. Run Quality & Health Checks
+### 5. How to run the application
+Start the core FastAPI backend server by running:
 ```bash
-# Run test suite
-pytest tests/ -v
-
-# Run type checking
-mypy app/
-
-# Run linter
-ruff check .
-
-# Execute standalone CLI health check
-python -m app.main --health
+make run
 ```
+The API will be available at `http://localhost:8000`. You can view the interactive documentation at `http://localhost:8000/docs`.
 
-### 4. Start Local Development Server
+### 6. How to run tests
+To ensure everything is working correctly, run the comprehensive test suite:
 ```bash
-# Launch FastAPI development server
-./scripts/run_dev.sh
-# Server starts at http://localhost:8000
-# OpenAPI Swagger documentation available at http://localhost:8000/docs
+make test
 ```
+This executes all unit and integration tests using `pytest`.
+
+### 7. How to run demo mode
+We provide an interactive Engineer UI built with Streamlit to simulate an end-to-end incident lifecycle.
+To launch the demo interface:
+```bash
+make demo
+```
+This will open the UI in your web browser, where you can click "RUN DEMO SCENARIO" to watch an incident unfold from predictive warning through RCA and knowledge base creation.
+
+### 8. How to connect Databricks
+The platform uses a Medallion Architecture (Bronze/Silver/Gold) on Databricks for distributed data processing and AI/BI dashboarding.
+To connect:
+1. Ensure your Databricks cluster is running.
+2. Provide your Databricks host and token in the `.env` file (e.g., `DATABRICKS_HOST` and `DATABRICKS_TOKEN`).
+3. Deploy the notebooks located in the `/notebooks` directory to your Databricks workspace.
+
+### 9. How to troubleshoot common failures
+- **Command Not Found (`make`)**: If you are on Windows, you can install `make` via Chocolatey (`choco install make`) or simply open the `Makefile` and run the `python -m ...` commands directly.
+- **Port 8000 Already in Use**: If `make run` fails because the port is taken, edit the `APP_PORT` variable in your `.env` file to a different port (e.g., 8080).
+- **ModuleNotFoundError**: Ensure your virtual environment is activated (`source .venv/bin/activate`) before running any Python or Make commands.
+- **Missing API Key Error**: If you see LLM errors, ensure your `.env` contains a valid `LLM_API_KEY` or switch `LLM_PROVIDER` back to `mock`.
 
 ---
 

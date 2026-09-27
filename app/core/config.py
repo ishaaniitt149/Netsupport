@@ -39,7 +39,10 @@ class Settings(BaseSettings):
     optical_rx_low_alarm_dbm: float = -14.0
     crc_error_spike_threshold: int = 100
     cpu_critical_pct: float = 90.0
+    memory_critical_pct: float = 90.0
     memory_low_free_pct: float = 5.0
+    interface_flaps_threshold: int = 5
+    packet_loss_critical_pct: float = 5.0
 
     # Predictive Settings
     lookback_days: int = 30
@@ -54,6 +57,7 @@ class Settings(BaseSettings):
     llm_api_base_url: str = "https://api.openai.com/v1"
     llm_api_key: str | None = None
     llm_timeout_seconds: int = 30
+    llm_allow_raw_infrastructure_data: bool = False
 
     model_config = SettingsConfigDict(
         env_file=".env",

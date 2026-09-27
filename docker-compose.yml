@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: network-operations-intelligence:latest
+    container_name: network_operations_intelligence
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      - DEBUG=True
+      - LOG_LEVEL=INFO
+      - LLM_PROVIDER=mock
+      - LLM_ALLOW_RAW_INFRASTRUCTURE_DATA=False
+    restart: unless-stopped
