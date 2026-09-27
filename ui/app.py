@@ -58,8 +58,12 @@ st.markdown("""
 import pathlib
 import sys
 
-sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from data_layer import (
+# Ensure project root is on sys.path so both `ui.*` and `app.*` packages are importable.
+_PROJECT_ROOT = str(pathlib.Path(__file__).resolve().parent.parent)
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
+from ui.data_layer import (
     compute_device_risk,
     compute_device_status,
     compute_kpis,

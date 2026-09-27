@@ -22,8 +22,19 @@ import pathlib
 import pandas as pd
 import streamlit as st
 
-import app.models.kb_article
-from app.knowledge.kb_store import KBStore
+# ---------------------------------------------------------------------------
+# Ensure the project root is on sys.path so `app.*` packages are importable.
+# On Streamlit Cloud the working directory may differ from the project root,
+# which causes `import app.models.kb_article` to fail.
+# ---------------------------------------------------------------------------
+import sys as _sys
+
+_PROJECT_ROOT = str(pathlib.Path(__file__).resolve().parent.parent)
+if _PROJECT_ROOT not in _sys.path:
+    _sys.path.insert(0, _PROJECT_ROOT)
+
+import app.models.kb_article  # noqa: E402
+from app.knowledge.kb_store import KBStore  # noqa: E402
 
 ROOT = pathlib.Path(__file__).parent.parent
 DATA = ROOT / "data" / "synthetic"
