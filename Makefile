@@ -12,9 +12,13 @@ test:
 	@echo "Running test suite..."
 	.venv/bin/pytest tests/ -v
 
+lint:
+	@echo "Running linters..."
+	.venv/bin/ruff check .
+
 generate-data:
 	@echo "Generating synthetic network data..."
-	.venv/bin/python scripts/generate_devices.py
+	.venv/bin/python scripts/generate_rich_data.py
 
 run:
 	@echo "Starting FastAPI server..."
