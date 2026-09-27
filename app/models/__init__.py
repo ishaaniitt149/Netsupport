@@ -1,7 +1,7 @@
 """Core domain entities and schema exports."""
 
 from app.models.base import PlatformBaseModel, TimestampedModel
-from app.models.device import Device, TransceiverProfile
+from app.models.device import Device, DeviceRecord, TransceiverProfile
 from app.models.incident import (
     CiscoDiagnosticPayload,
     Incident,
@@ -17,6 +17,7 @@ __all__ = [
     "PlatformBaseModel",
     "TimestampedModel",
     "Device",
+    "DeviceRecord",
     "TransceiverProfile",
     "TelemetryRecord",
     "InterfaceTelemetry",

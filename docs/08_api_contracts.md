@@ -11,6 +11,7 @@
 from typing import Protocol, Iterator
 from .schemas import SolarWindsAlertEvent, SolarWindsRecoveryEvent, CiscoDiagnosticPayload
 
+
 class EventIngestionPort(Protocol):
     def poll_alerts(self, batch_size: int = 50) -> Iterator[SolarWindsAlertEvent]:
         """Poll or receive incoming SolarWinds alert events."""
@@ -30,21 +31,16 @@ class EventIngestionPort(Protocol):
 from typing import Protocol, Optional
 from .schemas import Incident, CiscoDiagnosticReport, RCAResult, KBSOPArticle
 
+
 class LLMProviderPort(Protocol):
     def generate_incident_summary(
-        self,
-        incident: Incident,
-        diagnostics: CiscoDiagnosticReport,
-        rca: RCAResult
+        self, incident: Incident, diagnostics: CiscoDiagnosticReport, rca: RCAResult
     ) -> str:
         """Generate a strictly grounded, zero-hallucination 3-paragraph summary."""
         ...
 
     def draft_kb_sop_article(
-        self,
-        incident: Incident,
-        diagnostics: CiscoDiagnosticReport,
-        rca: RCAResult
+        self, incident: Incident, diagnostics: CiscoDiagnosticReport, rca: RCAResult
     ) -> KBSOPArticle:
         """Draft a formal Standard Operating Procedure adhering to template."""
         ...

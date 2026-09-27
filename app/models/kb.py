@@ -1,7 +1,5 @@
 """Knowledge Base and Standard Operating Procedure (SOP) models."""
 
-
-
 from app.models.base import TimestampedModel
 
 

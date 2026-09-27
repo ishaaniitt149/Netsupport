@@ -70,9 +70,9 @@ flowchart TD
   - Prior to exporting diagnostic reports to external LLM providers, sensitive credentials (e.g., hashed enable passwords in `show running-config`, SNMP community strings, private cryptographic keys) are sanitized using regex redaction filters:
     ```python
     REDACTION_PATTERNS = [
-        (r'enable secret \d \S+', 'enable secret [REDACTED]'),
-        (r'snmp-server community \S+', 'snmp-server community [REDACTED]'),
-        (r'password \d \S+', 'password [REDACTED]')
+        (r"enable secret \d \S+", "enable secret [REDACTED]"),
+        (r"snmp-server community \S+", "snmp-server community [REDACTED]"),
+        (r"password \d \S+", "password [REDACTED]"),
     ]
     ```
 
